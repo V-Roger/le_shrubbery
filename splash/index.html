@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Le Shrubbery</title>
+  <meta name="description" content="Des jeux, des bières, et un jardinet.">
+  <meta name="author" content="Virgil Roger">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+  <style>
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    .teaser {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: calc(100vw - 400px);
+      padding: 15px 40px;
+      background: url('shrubbackground.png');
+      background-position: right;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .teaser:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 80px;
+      height: 100%;
+      background: linear-gradient(to right, transparent, white);
+    }
+
+    .social {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100vh;
+      width: 380px;
+    }
+
+    .social ul {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    .social ul li {
+      widows: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, p {
+      font-family: 'Open Sans', 'Helvetica neue', 'Helvetica', 'Arial', sans-serif;
+      font-weight: bolder;
+    }
+
+    h1 {
+      font-size: 48pt;      
+    }
+
+    h2 {
+      font-size: 32pt;      
+    }
+
+    p {
+      font-size: 14pt;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>
+      Le Srubbery
+    </h1>
+    <h2>
+      Des jeux, des bières et un jardinet.
+    </h2>
+  </header>
+  <main>
+    <section class="teaser">
+      <p>
+        Bientôt dans votre navigateur, déjà dans votre ville.
+      </p>
+    </section>
+    <section class="social">
+      <ul class="social__links">
+        <li class="social__links--fb">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fpg%2FLeShrubbery%2F&tabs=timeline&width=340&height=970&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=424241664262310" width="340" height="970" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+          <!-- <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FLeShrubbery%2Fphotos%2Fa.1191033407662907.1073741827.1186056021493979%2F1297327763700137%2F%3Ftype%3D3&width=750&show_text=true&appId=424241664262310&height=363" width="750" height="400" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe> -->
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
