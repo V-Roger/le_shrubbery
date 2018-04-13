@@ -34,10 +34,12 @@
     }
 
     .header__logo {
-      position: absolute;
-      left: 50px;
-      top: 15vh;
+      position: fixed;
+      left: -10vh;
+      top: 50%;
+      margin-top: -25vh;
       height: 50vh;
+      z-index: 100;
     }
 
     main {
@@ -162,17 +164,23 @@
       font-size: 14pt;
     }
   </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+  integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+  crossorigin=""></script>
 </head>
 
 <body>
   <header>
     <img class="header__logo" src="./splash/logo_icon_shrubbery.svg" alt="Le Shrubbery" />
-    <!-- <h1>
+    <h1>
       Le Srubbery
     </h1>
     <h2>
       Des jeux, des bières et un jardinet.
-    </h2> -->
+    </h2>
   </header>
   <main>
     <section class="teaser">
@@ -193,327 +201,43 @@
   <script>
       var map;
       var shrubbery = {lat: 45.769069, lng: 4.865986};
-      var styles = [
-        {
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#ebe3cd"
-            }
-          ]
-        },
-        {
-          "elementType": "labels.text",
-          "stylers": [
-            {
-              "weight": 8
-            }
-          ]
-        },
-        {
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#0a7e13"
-            }
-          ]
-        },
-        {
-          "elementType": "labels.text.stroke",
-          "stylers": [
-            {
-              "color": "#ffffff"
-            },
-            {
-              "weight": 2.5
-            }
-          ]
-        },
-        {
-          "featureType": "administrative",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "color": "#c9b2a6"
-            }
-          ]
-        },
-        {
-          "featureType": "administrative.land_parcel",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "color": "#dcd2be"
-            }
-          ]
-        },
-        {
-          "featureType": "administrative.land_parcel",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "administrative.land_parcel",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#ae9e90"
-            }
-          ]
-        },
-        {
-          "featureType": "landscape.man_made",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#ebe6d4"
-            }
-          ]
-        },
-        {
-          "featureType": "landscape.natural",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#387c28"
-            }
-          ]
-        },
-        {
-          "featureType": "poi",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#dfd2ae"
-            }
-          ]
-        },
-        {
-          "featureType": "poi",
-          "elementType": "labels.text",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "poi",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#93817c"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.business",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.park",
-          "elementType": "geometry.fill",
-          "stylers": [
-            {
-              "color": "#a5b076"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.park",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#447530"
-            }
-          ]
-        },
-        {
-          "featureType": "road",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#f5f1e6"
-            }
-          ]
-        },
-        {
-          "featureType": "road",
-          "elementType": "labels.icon",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "road.arterial",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#fdfcf8"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#f8c967"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "color": "#e9bc62"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway.controlled_access",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#e98d58"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway.controlled_access",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "color": "#db8555"
-            }
-          ]
-        },
-        {
-          "featureType": "road.local",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "road.local",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#806b63"
-            }
-          ]
-        },
-        {
-          "featureType": "transit",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "transit.line",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#dfd2ae"
-            }
-          ]
-        },
-        {
-          "featureType": "transit.line",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#8f7d77"
-            }
-          ]
-        },
-        {
-          "featureType": "transit.line",
-          "elementType": "labels.text.stroke",
-          "stylers": [
-            {
-              "color": "#ebe3cd"
-            }
-          ]
-        },
-        {
-          "featureType": "transit.station",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "color": "#dfd2ae"
-            }
-          ]
-        },
-        {
-          "featureType": "water",
-          "elementType": "geometry.fill",
-          "stylers": [
-            {
-              "color": "#9dd5d3"
-            }
-          ]
-        },
-        {
-          "featureType": "water",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "color": "#92998d"
-            }
-          ]
-        }
-      ];
+      var shrubIcon = L.icon({
+        iconUrl: './splash/logo_icon_shrubbery_marker.svg',
 
+        iconSize:     [40, 200], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      });
       function hideMap(event) {
         console.log(event)
         if (event.target.id !== 'map' && document.querySelector('#map').style.visibility === 'visible') {
           document.querySelector('#map').style.visibility = 'hidden';
+          document.querySelector('.social').style.visibility = 'visible';
           window.location.hash = '';
         }
       }
 
       function displayMap() {
         document.querySelector('#map').style.visibility = 'visible';
-        var marker = new google.maps.Marker({
-          position: shrubbery,
-          map: map,
-          title: 'Here be Games & Beer',
-          animation: google.maps.Animation.DROP,
-          icon: './splash/logo_icon_shrubbery_marker.svg'
-        });
+        document.querySelector('.social').style.visibility = 'hidden';
+        var marker = L.marker([45.769069, 4.865986], {
+          icon: shrubIcon,
+        }).addTo(map);
       }
 
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: shrubbery,
-          styles: styles,
-        });
+        map = L.map('map').setView([45.769069, 4.865986], 14);
+        L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+          attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+          minZoom: 1,
+          maxZoom: 18
+        }).addTo(map);
       }
 
       (window.onload = function() {
         document.querySelector('.teaser').addEventListener('click', hideMap, true);
+        initMap();
       });
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4rKhieiSCAYasqDVxyAzwpLGS5caexfg&callback=initMap">
     </script>
 </body>
 </html>
