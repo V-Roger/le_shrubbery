@@ -21,6 +21,7 @@
     *, *:before, *:after {
       box-sizing: border-box;
       font-family: 'Roboto', sans-serif;
+      color: #2C2D31;
     }
 
     header {
@@ -60,26 +61,29 @@
       height: 100%;
       width: 100%;
       padding: 15px 40px;
-      background: url('./splash/wooden_bg--1920x.jpg');
+      background-image: url('./splash/ulule_bg.png');
+      background-color: #87af66;
       background-position: right;
-      background-size: cover;
+      background-size: contain;
       background-repeat: no-repeat;
     }
 
-    .teaser:after {
+    .teaser:before {
       content: '';
-      position: absolute;
-      right: 380px;
+      display: block;
+      position: fixed;
       top: 0;
-      width: 120px;
+      left: 0;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(to right, transparent, rgba(255,255,255, 0.6));
+      /* background-image: url('./splash/wooden_bg--1920x.jpg'); */
+      opacity: 0.15;
     }
 
     .teaser__logo {
       position: absolute;
-      left: calc(50px + 15vh);
-      top: 30vh;
+      left: calc(50px + 20vh);
+      top: 35vh;
       width: 50vw;
     }
 
@@ -88,27 +92,45 @@
       font-size: 28pt;
       position: absolute;
       bottom: 25vh;
-      left: 22vh;
+      left: calc(55px + 20vh);
     }
 
     .teaser__text a {
+      z-index: 5;
+      position: relative;
       display: inline-block;
       text-decoration: none;
-      color: #387c28;
+      color: #1d5211;
       font-weight: bold;
       height: 60px;
       padding: 10px 25px 10px 5px;
       padding-top: 0px;
-      border-bottom: 10px solid rgba(56, 124, 40, 1);
+      /* border-bottom: 10px solid rgba(56, 124, 40, 1); */
       transition: all 80ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+
+    .teaser__text a:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 40%;
+      width: 0%;
+      height: 100%;
+      transition: width 350ms cubic-bezier(0.215, 0.610, 0.355, 1.000);      
     }
 
     .teaser__text a:hover,
     .teaser__text a:focus {
       color: white;
       cursor: pointer;
-      padding-bottom: 0;
-      border-bottom: 60px solid rgba(56, 124, 40, 1);
+    }
+
+    .teaser__text a:hover:before,
+    .teaser__text a:focus:before {
+      background: rgba(56, 124, 40, 1);
+      width: 130%;
+      z-index: -1;
     }
 
     .teaser__map {
@@ -118,6 +140,37 @@
       box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.4);
     }
 
+    .teaser__map-close {
+      visibility: hidden;      
+      position: fixed;
+      top: 30px;
+      right: 55px;
+      background: rgba(56, 124, 40, 1);
+      width: 35px;
+      height: 35px;
+      border-radius: 35px;
+      z-index: 1000;
+      transition: all 40ms cubic-bezier(0.215, 0.610, 0.355, 1.000);      
+    }
+
+    .teaser__map-close:hover {
+      cursor: pointer;
+      transform: scale(1.5);
+    }
+
+    .teaser__map-close > .icon {
+      color: #FFFFFF;
+      font-size: 32px;
+      line-height: 32px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .teaser__map-close > span:not(.icon) {
+      display: block;
+      text-indent: -9999px;      
+    }
+
     .social {
       position: absolute;
       right: 0;
@@ -125,7 +178,7 @@
       padding: 15px 40px;
       height: 100%;
       width: 380px;
-      background: rgba(255,255,255, 0.6);
+      /* background: rgba(255,255,255, 0.6); */
     }
 
     .social ul {
@@ -186,9 +239,10 @@
     <section class="teaser">
       <img class="teaser__logo" src="./splash/logo_text_shrubbery.svg" alt="Le Shrubbery" />
       <p class="teaser__text">
-        Bientôt dans votre navigateur, <a href="#juste-ici" title="Le Shrubbery à Villeurbanne" onclick="displayMap()">déjà dans votre ville.</a>
+        Bientôt dans votre navigateur, <a href="#juste-ici" title="Le Shrubbery à Villeurbanne" onclick="displayMap()">déjà dans votre ville !</a>
       </p>
       <div id="map" class="teaser__map"></div>
+      <button class="teaser__map-close"><span class="icon">&times;</span><span>Fermer la carte</span></button>
     </section>
     <section class="social">
       <ul class="social__links">
@@ -209,9 +263,9 @@
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       });
       function hideMap(event) {
-        console.log(event)
-        if (event.target.id !== 'map' && document.querySelector('#map').style.visibility === 'visible') {
+        if (event.target.id !== 'map' && !event.target.className.includes('leaflet-control') && document.querySelector('#map').style.visibility === 'visible') {
           document.querySelector('#map').style.visibility = 'hidden';
+          document.querySelector('.teaser__map-close').style.visibility = 'hidden';                 
           document.querySelector('.social').style.visibility = 'visible';
           window.location.hash = '';
         }
@@ -219,6 +273,7 @@
 
       function displayMap() {
         document.querySelector('#map').style.visibility = 'visible';
+        document.querySelector('.teaser__map-close').style.visibility = 'visible';        
         document.querySelector('.social').style.visibility = 'hidden';
         var marker = L.marker([45.769069, 4.865986], {
           icon: shrubIcon,
@@ -226,16 +281,16 @@
       }
 
       function initMap() {
-        map = L.map('map').setView([45.769069, 4.865986], 14);
+        map = L.map('map').setView([45.769069, 4.865986], 15);
         L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
           attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
-          minZoom: 1,
+          minZoom: 12,
           maxZoom: 18
         }).addTo(map);
       }
 
       (window.onload = function() {
-        document.querySelector('.teaser').addEventListener('click', hideMap, true);
+        document.querySelector('.teaser:not(.teaser__map)').addEventListener('click', hideMap, true);
         initMap();
       });
     </script>
