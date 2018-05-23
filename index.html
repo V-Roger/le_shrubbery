@@ -63,7 +63,7 @@
       padding: 15px 40px;
       background-image: url('./splash/ulule_bg.png');
       background-color: #87af66;
-      background-position: right;
+      background-position: left;
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -117,7 +117,7 @@
       top: 40%;
       width: 0%;
       height: 100%;
-      transition: width 350ms cubic-bezier(0.215, 0.610, 0.355, 1.000);      
+      transition: width 350ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
     }
 
     .teaser__text a:hover,
@@ -133,15 +133,40 @@
       z-index: -1;
     }
 
-    .teaser__map {
+    .map-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
       visibility: hidden;
+    }
+
+    .location {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: #FFFFFF;
+      z-index: 1000;
+      padding: 25px;
+    }
+
+    .location address {
+      display: flex;
+    }
+
+    .location address h3,
+    .location address p {
+      padding: 0 50px;
+    }
+
+    .teaser__map {
       height: 100%;
       width: 100%;
       box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.4);
     }
 
     .teaser__map-close {
-      visibility: hidden;      
+      visibility: hidden;
       position: fixed;
       top: 30px;
       right: 55px;
@@ -150,7 +175,7 @@
       height: 35px;
       border-radius: 35px;
       z-index: 1000;
-      transition: all 40ms cubic-bezier(0.215, 0.610, 0.355, 1.000);      
+      transition: all 40ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
     }
 
     .teaser__map-close:hover {
@@ -168,7 +193,7 @@
 
     .teaser__map-close > span:not(.icon) {
       display: block;
-      text-indent: -9999px;      
+      text-indent: -9999px;
     }
 
     .social {
@@ -177,8 +202,7 @@
       top: 0;
       padding: 15px 40px;
       height: 100%;
-      width: 380px;
-      /* background: rgba(255,255,255, 0.6); */
+      width: 580px;
     }
 
     .social ul {
@@ -190,18 +214,17 @@
     }
 
     .social ul li {
-      widows: 100%;
+      width: 500px;
       height: 100%;
       margin: 0;
       padding: 0;
     }
 
-    .social__links--fb iframe {
-      max-height: 100%;
-      max-width: 100%;
+    .social__links--fb a {
+      display: none;
     }
 
-    h1, h2, p {
+    h1, h2 {
       font-weight: bolder;
     }
 
@@ -217,7 +240,11 @@
       font-size: 14pt;
     }
 
-    @media only screen and (max-width: 1000px){
+    @media only screen and (max-width: 1000px) {
+      h3, p {
+        font-size: 24pt;
+      }
+
       .teaser {
         background-size: cover;
         background-position: unset;
@@ -242,8 +269,38 @@
         top: 15px;
       }
 
-      .social {
+      .social__links--fb a {
+        display: flex;
+        position: absolute;
+        bottom: 25vh;
+        left: 0;
+        height: 80px;
+        align-items: center;
+        font-size: 28pt;
+        text-decoration: none;
+      }
+
+      .social__links--fb a:hover {
+
+      }
+
+      .social__links--fb a img {
+        width: 80px;
+        margin-right: 25px;
+      }
+
+      .social__links--fb iframe {
         display: none;
+      }
+
+      .location address {
+        display: block;
+      }
+    }
+
+    @media only screen and (max-height: 600px) {
+      .teaser__text {
+        bottom: 5%;
       }
     }
   </style>
@@ -271,13 +328,34 @@
       <p class="teaser__text">
         Bientôt dans votre navigateur,<br/><a href="#juste-ici" title="Le Shrubbery à Villeurbanne" onclick="displayMap()">déjà dans votre ville !</a>
       </p>
-      <div id="map" class="teaser__map"></div>
+      <div class="map-container">
+        <div id="map" class="teaser__map"></div>
+        <div class="location">
+          <address>
+            <h3>Le Shrubbery</h3>
+            <p>
+            17 rue d'Inkermann,<br/>
+            69100 – Villeurbanne<br/>
+            </p>
+            <div>
+              <p>
+              Station Charpennes - Métro A et B, Tram T1 et T4
+              <p>
+              <a href="mailto:contact@leshrubbery.fr" alt="Contacter le Shrubbery">contact@leshrubbery.fr</a>
+            </div>
+          </address>
+        </div>
+      </div>
       <button class="teaser__map-close"><span class="icon">&times;</span><span>Fermer la carte</span></button>
     </section>
     <section class="social">
       <ul class="social__links">
         <li class="social__links--fb">
-          <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fpg%2FLeShrubbery%2F&tabs=timeline&width=300&height=950&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=424241664262310" width="300" height="950" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+          <a href="https://www.facebook.com/pg/LeShrubbery" title="Le Shrubbery sur Facebook">
+            <img src="./splash/logo_icon_fb.svg" alt="Le Shrubbery sur Facebook" />
+            (Et aussi sur Facebook)
+          </a>
+          <iframe class="fb-embed" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FLeShrubbery%2F&tabs=timeline&width=800&height=950&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=424241664262310" width="800" height="950" style="border:none;overflow:hidden" scrolling="yes" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         </li>
       </ul>
     </section>
@@ -293,17 +371,17 @@
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       });
       function hideMap(event) {
-        if (event.target.id !== 'map' && !event.target.className.includes('leaflet-control') && document.querySelector('#map').style.visibility === 'visible') {
-          document.querySelector('#map').style.visibility = 'hidden';
-          document.querySelector('.teaser__map-close').style.visibility = 'hidden';                 
+        if (event.target.id !== 'map' && !event.target.className.includes('leaflet-control') && document.querySelector('.map-container').style.visibility === 'visible') {
+          document.querySelector('.map-container').style.visibility = 'hidden';
+          document.querySelector('.teaser__map-close').style.visibility = 'hidden';
           document.querySelector('.social').style.visibility = 'visible';
           window.location.hash = '';
         }
       }
 
       function displayMap() {
-        document.querySelector('#map').style.visibility = 'visible';
-        document.querySelector('.teaser__map-close').style.visibility = 'visible';        
+        document.querySelector('.map-container').style.visibility = 'visible';
+        document.querySelector('.teaser__map-close').style.visibility = 'visible';
         document.querySelector('.social').style.visibility = 'hidden';
         var marker = L.marker([45.769069, 4.865986], {
           icon: shrubIcon,
@@ -311,7 +389,7 @@
       }
 
       function initMap() {
-        map = L.map('map').setView([45.769069, 4.865986], window.innerWidth > 900 ? 15 : 16);
+        map = L.map('map').setView([45.769069, 4.865986], window.innerWidth > 1000 ? 15 : 16);
         L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
           attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
           minZoom: 12,
